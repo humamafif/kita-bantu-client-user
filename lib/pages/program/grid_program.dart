@@ -33,13 +33,28 @@ class _ProgramGridState extends State<ProgramGrid> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount;
+    double childAspectRatio;
+
+    if (screenWidth < 600) {
+      crossAxisCount = 1;
+      childAspectRatio = 1.2;
+    } else if (screenWidth < 900) {
+      crossAxisCount = 2;
+      childAspectRatio = 1.5;
+    } else {
+      crossAxisCount = 3;
+      childAspectRatio = 1.6;
+    }
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: widget.programs.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1.6,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: childAspectRatio,
       ),
       itemBuilder: (context, index) {
         final program = widget.programs[index];
@@ -79,6 +94,7 @@ class _ProgramGridState extends State<ProgramGrid> {
                       children: [
                         Text(
                           program.name,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.red,
@@ -93,6 +109,7 @@ class _ProgramGridState extends State<ProgramGrid> {
                               children: [
                                 Text(
                                   'Goal Amount: ${program.goalAmount}',
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -100,6 +117,7 @@ class _ProgramGridState extends State<ProgramGrid> {
                                 ),
                                 Text(
                                   'Dana terkumpul: ${program.danaTerkumpul}',
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -109,6 +127,8 @@ class _ProgramGridState extends State<ProgramGrid> {
                             ),
                             Text(
                               program.status,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.red,
