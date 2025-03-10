@@ -1,4 +1,4 @@
-# kita=bantu-app
+# kita-bantu-app
 
 A new Flutter project.
 
